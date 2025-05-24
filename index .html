@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CognEasy - Protótipo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .app-container {
+            width: 420px;
+            height: 680px;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        /* Header */
+        .app-header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .back-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 8px 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            font-size: 16px;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        
+        .header-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        .header-subtitle {
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .profile-avatar {
+            width: 35px;
+            height: 35px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+        }
+        
+        /* Navigation */
+        .bottom-nav {
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            padding: 8px 0;
+            display: flex;
+            justify-content: space-around;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 10px;
+            gap: 4px;
+            min-width: 60px;
+        }
+        
+        .nav-item.active {
+            background: #e8f5e8;
+            color: #4CAF50;
+        }
+        
+        .nav-icon {
+            font-size: 1.2em;
+            line-height: 1;
+        }
+        
+        .nav-label {
+            font-size: 0.7em;
+            font-weight: 500;
+            text-align: center;
+        }
+        
+        /* Content Area */
+        .content-area {
+            flex: 1;
+            overflow-y: auto;
+            background: #f8f9fa;
+            position: relative;
+            padding-bottom: 70px;
+        }
+        
+        /* Login Screen */
+        .login-screen {
+            padding: 30px;
+            text-align: center;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .login-logo {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+        
+        .login-title {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .login-subtitle {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .user-type-selector {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .user-type-btn {
+            flex: 1;
+            padding: 20px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-type-btn:hover, .user-type-btn.selected {
+            border-color: #4CAF50;
+            background: #e8f5e8;
+            transform: translateY(-2px);
+        }
+        
+        .user-type-icon {
+            font-size: 2em;
+        }
+        
+        .user-type-label {
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9em;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .form-input {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .form-input:focus {
+            border-color: #4CAF50;
+        }
+        
+        .login-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            background: #45a049;
+            transform: translateY(-1px);
+        }
+        
+        /* Dashboard Médico */
+        .dashboard {
+            padding: 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .section-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .patient-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .patient-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .patient-item:hover {
+            background: #f8f9fa;
+        }
+        
+        .patient-item:last-child {
+            border-bottom: none;
+        }
+        
+        .patient-avatar {
+            width: 45px;
+            height: 45px;
+            background: #e8f5e8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .patient-info {
+            flex: 1;
+        }
+        
+        .patient-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .patient-status {
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        .alert-badge {
+            background: #ff4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 10px;
+            font-size: 0.7em;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .alert-badge.medium {
+            background: #ff9800;
+        }
+        
+        .alert-badge.low {
+            background: #4CAF50;
+        }
+        
+        /* Chat Interface */
+        .chat-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            max-width: 85%;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1em;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        
+        .message.user .message-avatar {
+            background: #667eea;
+        }
+        
+        .message.assistant .message-avatar {
+            background: #4CAF50;
+        }
+        
+        .message-content {
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+        
+        .message.user .message-content {
+            background: #667eea;
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+        
+        .message.assistant .message-content {
+            background: white;
+            color: #333;
+            border: 1px solid #e0e0e0;
+            border-bottom-left-radius: 6px;
+        }
+        
+        /* Quick Actions - Melhor alinhamento */
+        .quick-actions {
+            background: white;
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+            display: none;
+        }
+        
+        .quick-actions.show {
+            display: block;
+        }
+        
+        .quick-actions h4 {
+            font-size: 0.8em;
+            color: #666;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            padding: 12px 8px;
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        
+        .action-btn:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-1px);
+            border-color: #4CAF50;
+        }
+        
+        /* Chat Input - Melhor alinhamento */
+        .chat-input {
+            background: white;
+            padding: 15px 20px;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .input-field {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.9em;
+            transition: border-color 0.2s;
+        }
+        
+        .input-field:focus {
+            border-color: #4CAF50;
+        }
+        
+        .send-btn {
+            width: 42px;
+            height: 42px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .send-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+        
+        /* Patient Dashboard */
+        .patient-dashboard {
+            padding: 20px;
+        }
+        
+        .welcome-card {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .welcome-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .welcome-subtitle {
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .metric-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+        }
+        
+        .metric-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .metric-value {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .metric-label {
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        .today-medications {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .med-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .med-item:last-child {
+            border-bottom: none;
+        }
+        
+        .med-info {
+            flex: 1;
+        }
+        
+        .med-name {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 3px;
+        }
+        
+        .med-time {
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        .med-status {
+            padding: 6px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        
+        .med-status.taken {
+            background: #e8f5e8;
+            color: #4CAF50;
+        }
+        
+        .med-status.pending {
+            background: #fff3e0;
+            color: #ff9800;
+        }
+        
+        /* Hidden screens */
+        .screen {
+            display: none;
+            height: 100%;
+        }
+        
+        .screen.active {
+            display: block;
+        }
+        
+        /* Document Links */
+        .document-link {
+            display: inline-block;
+            background: #e8f5e8;
+            color: #4CAF50;
+            padding: 8px 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-weight: 600;
+            margin: 5px 0;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: 1px solid #4CAF50;
+        }
+        
+        .document-link:hover {
+            background: #4CAF50;
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        /* Loading animation */
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 10px 16px;
+            background: white;
+            border-radius: 18px;
+            border: 1px solid #e0e0e0;
+            margin-bottom: 15px;
+            align-self: flex-start;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: -0.32s; }
+        .typing-dot:nth-child(2) { animation-delay: -0.16s; }
+        
+        @keyframes typing {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .app-container {
+                width: 100%;
+                height: 100%;
+                border-radius: 0;
+            }
+            
+            .login-screen {
+                padding: 20px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="app-header">
+            <div class="header-left">
+                <button class="back-btn" onclick="goBack()" style="display: none;" id="backBtn">←</button>
+                <div class="header-info">
+                    <div class="header-title" id="headerTitle">CognEasy</div>
+                    <div class="header-subtitle" id="headerSubtitle">Assistente Virtual Oncológico</div>
+                </div>
+            </div>
+            <div class="user-profile" onclick="showProfile()">
+                <div class="profile-avatar" id="profileAvatar">👤</div>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content-area">
+            <!-- Login Screen -->
+            <div class="screen active" id="loginScreen">
+                <div class="login-screen">
+                    <div class="login-logo">🩺</div>
+                    <div class="login-title">CognEasy</div>
+                    <div class="login-subtitle">Seu assistente virtual para tratamento oncológico</div>
+                    
+                    <div class="user-type-selector">
+                        <div class="user-type-btn" onclick="selectUserType('patient')" id="patientBtn">
+                            <div class="user-type-icon">🤒</div>
+                            <div class="user-type-label">Paciente</div>
+                        </div>
+                        <div class="user-type-btn" onclick="selectUserType('doctor')" id="doctorBtn">
+                            <div class="user-type-icon">👨‍⚕️</div>
+                            <div class="user-type-label">Médico</div>
+                        </div>
+                    </div>
+                    
+                    <div class="login-form">
+                        <input type="email" class="form-input" placeholder="Email" id="emailInput">
+                        <input type="password" class="form-input" placeholder="Senha" id="passwordInput">
+                        <button class="login-btn" onclick="doLogin()">Entrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Médico -->
+            <div class="screen" id="doctorDashboard">
+                <div class="dashboard">
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number">28</div>
+                            <div class="stat-label">Pacientes Ativos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">6</div>
+                            <div class="stat-label">Consultas Hoje</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Alertas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">92%</div>
+                            <div class="stat-label">Aderência Média</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title">⚠️ Pacientes que Precisam Atenção</div>
+                    <div class="patient-list">
+                        <div class="patient-item" onclick="viewPatient('maria')">
+                            <div class="patient-avatar">👩</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Maria Santos</div>
+                                <div class="patient-status">Náusea intensa - 8/10</div>
+                            </div>
+                            <div class="alert-badge">Alto</div>
+                        </div>
+                        <div class="patient-item" onclick="viewPatient('joao')">
+                            <div class="patient-avatar">👨</div>
+                            <div class="patient-info">
+                                <div class="patient-name">João Costa</div>
+                                <div class="patient-status">Aderência baixa - 67%</div>
+                            </div>
+                            <div class="alert-badge medium">Médio</div>
+                        </div>
+                        <div class="patient-item" onclick="viewPatient('ana')">
+                            <div class="patient-avatar">👩</div>
+                            <div class="patient-info">
+                                <div class="patient-name">Ana Lima</div>
+                                <div class="patient-status">Faltou consulta</div>
+                            </div>
+                            <div class="alert-badge medium">Médio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Paciente -->
+            <div class="screen" id="patientDashboard">
+                <div class="patient-dashboard">
+                    <div class="welcome-card">
+                        <div class="welcome-title">Olá, Maria! 👋</div>
+                        <div class="welcome-subtitle">Como você está se sentindo hoje?</div>
+                    </div>
+                    
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <div class="metric-icon">💊</div>
+                            <div class="metric-value">94%</div>
+                            <div class="metric-label">Aderência</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">📅</div>
+                            <div class="metric-value">5</div>
+                            <div class="metric-label">Dias até consulta</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">😊</div>
+                            <div class="metric-value">Bem</div>
+                            <div class="metric-label">Como me sinto</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-icon">🎯</div>
+                            <div class="metric-value">2º</div>
+                            <div class="metric-label">Ciclo atual</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-title">💊 Medicamentos de Hoje</div>
+                    <div class="today-medications">
+                        <div class="med-item">
+                            <div class="med-info">
+                                <div class="med-name">Ondasetrona 8mg</div>
+                                <div class="med-time">8:00</div>
+                            </div>
+                            <div class="med-status taken">✓ Tomado</div>
+                        </div>
+                        <div class="med-item">
+                            <div class="med-info">
+                                <div class="med-name">Ondasetrona 8mg</div>
+                                <div class="med-time">12:00</div>
+                            </div>
+                            <div class="med-status taken">✓ Tomado</div>
+                        </div>
+                        <div class="med-item">
+                            <div class="med-info">
+                                <div class="med-name">Dexametasona 4mg</div>
+                                <div class="med-time">18:00</div>
+                            </div>
+                            <div class="med-status pending">⏰ Pendente</div>
+                        </div>
+                        <div class="med-item">
+                            <div class="med-info">
+                                <div class="med-name">Ondasetrona 8mg</div>
+                                <div class="med-time">20:00</div>
+                            </div>
+                            <div class="med-status pending">⏰ Pendente</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Interface -->
+            <div class="screen" id="chatScreen">
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="message assistant">
+                            <div class="message-avatar">🤖</div>
+                            <div class="message-content">
+                                Olá! Sou seu assistente virtual. Como posso ajudá-lo hoje?<br><br>
+                                💊 Controlar medicamentos<br>
+                                📅 Verificar agenda<br>
+                                📝 Registrar sintomas<br>
+                                📄 Ver documentos<br>
+                                ❓ Tirar dúvidas
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="quick-actions show" id="quickActions">
+                        <h4>Ações Rápidas:</h4>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="quickAction('medicamento')">💊 Tomei remédio</button>
+                            <button class="action-btn" onclick="quickAction('sintoma')">😷 Registrar sintoma</button>
+                            <button class="action-btn" onclick="quickAction('agenda')">📅 Ver agenda</button>
+                            <button class="action-btn" onclick="quickAction('documentos')">📄 Documentos</button>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input">
+                        <div class="input-container">
+                            <input type="text" class="input-field" placeholder="Digite sua mensagem..." id="messageInput" onkeypress="handleKeyPress(event)">
+                            <button class="send-btn" onclick="sendMessage()">➤</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav" id="bottomNav" style="display: none;">
+            <div class="nav-item" onclick="showScreen('dashboard')" id="navHome">
+                <div class="nav-icon">🏠</div>
+                <div class="nav-label">Início</div>
+            </div>
+            <div class="nav-item active" onclick="showScreen('chat')" id="navChat">
+                <div class="nav-icon">💬</div>
+                <div class="nav-label">Chat</div>
+            </div>
+            <div class="nav-item" onclick="showScreen('documents')" id="navDocuments">
+                <div class="nav-icon">📄</div>
+                <div class="nav-label">Documentos</div>
+            </div>
+            <div class="nav-item" onclick="showScreen('agenda')" id="navAgenda">
+                <div class="nav-icon">📅</div>
+                <div class="nav-label">Agenda</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentUser = null;
+        let currentScreen = 'login';
+        let currentScenario = [];
+        let scenarioStep = 0;
+
+        // Predefined chat scenarios for demo
+        const chatScenarios = {
+            patient: {
+                'medicamento': [
+                    "Tomei meu medicamento",
+                    "✅ Perfeito! Qual medicamento você tomou?",
+                    "Ondasetrona 8mg",
+                    "✅ Registrado! Ondasetrona 8mg tomado às 14:30.<br><br>📊 Sua aderência hoje: 100%<br>📈 Aderência semanal: 94%<br><br>🔔 Próximo medicamento: Dexametasona às 18h"
+                ],
+                'sintoma': [
+                    "Quero registrar um sintoma",
+                    "📝 Claro! Como você está se sentindo? Pode me contar o que está acontecendo?",
+                    "Estou com um pouco de náusea",
+                    "📊 Em uma escala de 1 a 10, como você classificaria essa náusea?",
+                    "Uns 4/10",
+                    "✅ Náusea 4/10 registrada às 14:30.<br><br>💡 ORIENTAÇÕES IMEDIATAS:<br>• Beba pequenos goles d'água gelada<br>• Evite odores fortes<br>• Prefira alimentos secos (torrada, biscoito)<br><br>📈 Seu próximo Ondasetrona é às 18h<br><br>⚠️ Se piorar para 6/10 ou mais, me avise imediatamente!"
+                ],
+                'agenda': [
+                    "Mostrar minha agenda",
+                    "📅 <strong>SUA AGENDA HOJE (15/01):</strong><br><br>💊 <strong>MEDICAMENTOS:</strong><br>• 18h - Dexametasona 4mg<br>• 20h - Ondasetrona 8mg<br><br>📅 <strong>AMANHÃ (16/01):</strong><br>• 8h - Ondasetrona 8mg<br>• 10h - Consulta Dr. Silva<br>• 12h - Ondasetrona 8mg<br><br>📋 <strong>PRÓXIMOS:</strong><br>• 23/01 - Exames de sangue<br>• 28/01 - 3º Ciclo quimio<br><br>💡 Quer que eu configure lembretes para algum compromisso?"
+                ],
+                'documentos': [
+                    "Quero ver meus documentos",
+                    "📄 <strong>SEUS DOCUMENTOS RECENTES:</strong><br><br>📋 Você tem 4 documentos disponíveis:<br><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Receita Médica Atual')\">💊 Receita Médica Atual (15/01)</span><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Hemograma Completo')\">🩸 Hemograma Completo (10/01)</span><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Tomografia de Tórax')\">🔍 Tomografia de Tórax (05/01)</span><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Receita Anterior')\">💊 Receita Anterior (28/12)</span><br><br>" +
+                    "Clique em qualquer documento para visualizar!"
+                ]
+            },
+            doctor: {
+                'overview': [
+                    "Como estão meus pacientes hoje?",
+                    "📋 <strong>RELATÓRIO DO DIA - Dr. Silva</strong><br><br>🟥 <strong>ALTA PRIORIDADE (3):</strong><br>• Maria Santos - Náusea 8/10<br>• João Costa - Aderência 67%<br>• Ana Lima - Faltou consulta<br><br>🟨 <strong>ATENÇÃO MODERADA (2):</strong><br>• Carlos Pereira - Fadiga persistente<br>• Lucia Santos - Esqueceu medicação<br><br>🟩 <strong>SITUAÇÃO NORMAL (23):</strong><br>• Aderência média: 92%<br>• Sem sintomas graves reportados<br><br>📞 <strong>AÇÕES SUGERIDAS:</strong><br>• Ligar para Maria (náusea alta)<br>• Revisar protocolo do João"
+                ],
+                'agenda': [
+                    "Mostrar minha agenda",
+                    "📅 <strong>SUA AGENDA HOJE (15/01):</strong><br><br>🕐 <strong>14:00 - Ana Lima</strong><br>• Resultados de exames<br>• Sala 203<br><br>🕐 <strong>15:30 - Pedro Oliveira</strong><br>• Planejamento cirúrgico<br>• Sala 203<br><br>📅 <strong>AMANHÃ (16/01):</strong><br>• 9h - João Costa (primeira consulta)<br>• 10h - Maria Santos (seguimento)<br>• 11h30 - Carla Mendes (revisão protocolo)<br><br>📋 <strong>PRÓXIMOS:</strong><br>• 17/01 - 2 consultas<br>• 20/01 - Reunião multidisciplinar<br><br>💡 Algum paciente específico que gostaria de revisar antes da consulta?"
+                ],
+                'documentos': [
+                    "Ver documentos dos pacientes",
+                    "📄 <strong>DOCUMENTOS RECENTES DOS PACIENTES:</strong><br><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Maria Santos - Hemograma')\">🩸 Maria Santos - Hemograma (10/01)</span><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: João Costa - Prescrição')\">💊 João Costa - Prescrição (14/01)</span><br>" +
+                    "<span class='document-link' onclick=\"alert('Documento: Ana Lima - Relatório Médico')\">📋 Ana Lima - Relatório Médico (12/01)</span><br><br>" +
+                    "Clique para visualizar os documentos!"
+                ]
+            }
+        };
+
+        function selectUserType(type) {
+            document.getElementById('patientBtn').classList.remove('selected');
+            document.getElementById('doctorBtn').classList.remove('selected');
+            
+            if (type === 'patient') {
+                document.getElementById('patientBtn').classList.add('selected');
+                document.getElementById('emailInput').placeholder = "maria.santos@email.com";
+            } else {
+                document.getElementById('doctorBtn').classList.add('selected');
+                document.getElementById('emailInput').placeholder = "dr.silva@clinica.com";
+            }
+            
+            currentUser = type;
+        }
+
+        function doLogin() {
+            if (!currentUser) {
+                alert('Selecione o tipo de usuário');
+                return;
+            }
+
+            document.getElementById('loginScreen').classList.remove('active');
+            document.getElementById('bottomNav').style.display = 'flex';
+            
+            if (currentUser === 'patient') {
+                document.getElementById('profileAvatar').textContent = '👩';
+                document.getElementById('headerTitle').textContent = 'Maria Santos';
+                document.getElementById('headerSubtitle').textContent = 'Paciente • 2º Ciclo AC';
+                showScreen('dashboard');
+                
+                updateQuickActions('patient');
+            } else {
+                document.getElementById('profileAvatar').textContent = '👨‍⚕️';
+                document.getElementById('headerTitle').textContent = 'Dr. Silva';
+                document.getElementById('headerSubtitle').textContent = 'Oncologista • 28 pacientes ativos';
+                showScreen('dashboard');
+                
+                updateQuickActions('doctor');
+            }
+        }
+
+        function updateQuickActions(userType) {
+            const quickActionsDiv = document.getElementById('quickActions');
+            if (userType === 'patient') {
+                quickActionsDiv.innerHTML = `
+                    <h4>Ações Rápidas:</h4>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="quickAction('medicamento')">💊 Tomei remédio</button>
+                        <button class="action-btn" onclick="quickAction('sintoma')">😷 Registrar sintoma</button>
+                        <button class="action-btn" onclick="quickAction('agenda')">📅 Ver agenda</button>
+                        <button class="action-btn" onclick="quickAction('documentos')">📄 Documentos</button>
+                    </div>
+                `;
+            } else {
+                quickActionsDiv.innerHTML = `
+                    <h4>Ações Rápidas:</h4>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="quickAction('overview')">📊 Status geral</button>
+                        <button class="action-btn" onclick="quickAction('alerts')">⚠️ Alertas</button>
+                        <button class="action-btn" onclick="quickAction('documentos')">📄 Documentos</button>
+                        <button class="action-btn" onclick="quickAction('agenda')">📅 Ver agenda</button>
+                    </div>
+                `;
+            }
+        }
+
+        function showScreen(screen) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            if (screen === 'dashboard') {
+                if (currentUser === 'patient') {
+                    document.getElementById('patientDashboard').classList.add('active');
+                } else {
+                    document.getElementById('doctorDashboard').classList.add('active');
+                }
+                document.getElementById('navHome').classList.add('active');
+                document.getElementById('headerTitle').textContent = currentUser === 'patient' ? 'Maria Santos' : 'Dr. Silva';
+                document.getElementById('backBtn').style.display = 'none';
+            } else if (screen === 'chat') {
+                document.getElementById('chatScreen').classList.add('active');
+                document.getElementById('navChat').classList.add('active');
+                document.getElementById('headerTitle').textContent = '💬 Assistente Virtual';
+                document.getElementById('backBtn').style.display = 'none';
+            } else if (screen === 'documents') {
+                alert('Tela de documentos em desenvolvimento!');
+                return;
+            } else if (screen === 'agenda') {
+                alert('Tela de agenda em desenvolvimento!');
+                return;
+            }
+            
+            currentScreen = screen;
+        }
+
+        function viewPatient(patientId) {
+            showScreen('chat');
+            document.getElementById('headerTitle').textContent = '💬 Consulta: Maria Santos';
+            document.getElementById('backBtn').style.display = 'block';
+            
+            const messagesContainer = document.getElementById('chatMessages');
+            messagesContainer.innerHTML = '';
+            
+            addMessage("Me mostre detalhes da Maria Santos", 'user');
+            
+            setTimeout(() => {
+                addMessage("👩 <strong>MARIA SANTOS - RESUMO DETALHADO</strong><br><br>📊 <strong>DADOS GERAIS:</strong><br>• Diagnóstico: Ca mama T2N1M0<br>• Protocolo: AC-T (2º ciclo AC)<br>• Última consulta: 10/01/2025<br><br>📈 <strong>ADERÊNCIA:</strong><br>• Semana atual: 94%<br>• Mês: 91%<br>• Tendência: ↗️ Melhorando<br><br>⚠️ <strong>SINTOMAS RECENTES:</strong><br>• Hoje: Náusea 8/10 (ALERTA!)<br>• Ontem: Fadiga 6/10, Náusea 5/10<br>• Padrão: Náusea crescente pós-infusão<br><br>💊 <strong>MEDICAMENTOS:</strong><br>• Ondasetrona: 94% aderência<br>• Dexametasona: 100% aderência<br><br>💡 <strong>SUGESTÃO:</strong> Considerar Metoclopramida adicional", 'assistant');
+            }, 1000);
+        }
+
+        function quickAction(action) {
+            if (currentUser === 'patient') {
+                if (chatScenarios.patient[action]) {
+                    startScenario(chatScenarios.patient[action]);
+                }
+            } else {
+                if (action === 'overview') {
+                    startScenario(chatScenarios.doctor.overview);
+                } else if (action === 'agenda') {
+                    startScenario(chatScenarios.doctor.agenda);
+                } else if (action === 'documentos') {
+                    startScenario(chatScenarios.doctor.documentos);
+                } else if (action === 'alerts') {
+                    addMessage("Mostrar alertas críticos", 'user');
+                    setTimeout(() => {
+                        addMessage("🚨 <strong>ALERTAS CRÍTICOS:</strong><br><br>🔴 <strong>URGENTE:</strong><br>• Maria Santos - Náusea 8/10 há 2h<br>• Carlos Pereira - Fadiga 8/10 há 3 dias<br><br>🟡 <strong>ATENÇÃO:</strong><br>• João Costa - Não tomou medicação 12h<br>• Ana Lima - Faltou à consulta<br><br>📱 <strong>AÇÕES AUTOMÁTICAS REALIZADAS:</strong><br>• SMS enviado para João<br>• Ligação agendada para Maria<br>• Reagendamento proposto para Ana", 'assistant');
+                    }, 1000);
+                }
+            }
+        }
+
+        function startScenario(scenario) {
+            currentScenario = [...scenario];
+            scenarioStep = 0;
+            
+            addMessage(currentScenario[0], 'user');
+            scenarioStep = 1;
+            
+            setTimeout(() => {
+                if (scenarioStep < currentScenario.length) {
+                    addMessage(currentScenario[scenarioStep], 'assistant');
+                    scenarioStep++;
+                }
+            }, 1000);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                addMessage(message, 'user');
+                input.value = '';
+                
+                document.getElementById('quickActions').classList.remove('show');
+                
+                showTyping();
+                
+                setTimeout(() => {
+                    hideTyping();
+                    
+                    if (currentScenario.length > 0 && scenarioStep < currentScenario.length) {
+                        addMessage(currentScenario[scenarioStep], 'assistant');
+                        scenarioStep++;
+                        
+                        if (scenarioStep >= currentScenario.length - 1) {
+                            currentScenario = [];
+                            scenarioStep = 0;
+                        }
+                    } else {
+                        generateContextualResponse(message);
+                    }
+                }, 1500);
+            }
+        }
+
+        function generateContextualResponse(message) {
+            let response = "Entendi! Como posso ajudá-lo mais?";
+            
+            const lowerMessage = message.toLowerCase();
+            
+            if (currentUser === 'patient') {
+                if (lowerMessage.includes('documento') || lowerMessage.includes('receita') || lowerMessage.includes('exame')) {
+                    response = "📄 Posso te ajudar com seus documentos!<br><br>" +
+                        "<span class='document-link' onclick=\"alert('Receita Médica Atual')\">💊 Ver Receita Atual</span><br>" +
+                        "<span class='document-link' onclick=\"alert('Hemograma Completo')\">🩸 Ver Hemograma</span><br>" +
+                        "<span class='document-link' onclick=\"alert('Tomografia de Tórax')\">🔍 Ver Tomografia</span><br><br>" +
+                        "Ou acesse a aba 'Documentos' para ver todos!";
+                } else if (lowerMessage.includes('dor')) {
+                    response = "📝 Registrando dor. Em uma escala de 1-10, qual a intensidade?<br><br>💡 Lembre-se: se a dor for maior que 7/10, é importante entrar em contato com sua equipe médica.";
+                } else if (lowerMessage.includes('consulta')) {
+                    response = "📅 Sua próxima consulta é amanhã às 10h com Dr. Silva.<br><br>📋 Já preparei uma lista das suas dúvidas registradas esta semana. Quer revisar?";
+                }
+            } else {
+                if (lowerMessage.includes('documento') || lowerMessage.includes('exame') || lowerMessage.includes('receita')) {
+                    response = "📄 Documentos dos pacientes disponíveis:<br><br>" +
+                        "<span class='document-link' onclick=\"alert('Maria Santos - Hemograma')\">🩸 Maria Santos - Hemograma</span><br>" +
+                        "<span class='document-link' onclick=\"alert('João Costa - Prescrição')\">💊 João Costa - Prescrição</span><br>" +
+                        "<span class='document-link' onclick=\"alert('Ana Lima - Relatório')\">📋 Ana Lima - Relatório</span>";
+                } else if (lowerMessage.includes('paciente') || lowerMessage.includes('relatório')) {
+                    response = "📊 Qual informação específica você gostaria?<br><br>Posso mostrar:<br>• Status geral dos pacientes<br>• Detalhes de um paciente específico<br>• Alertas de hoje<br>• Relatório de aderência";
+                }
+            }
+            
+            addMessage(response, 'assistant');
+        }
+
+        function addMessage(text, sender) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const avatar = sender === 'user' ? 
+                (currentUser === 'patient' ? '👩' : '👨‍⚕️') : '🤖';
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${avatar}</div>
+                <div class="message-content">${text}</div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function showTyping() {
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.id = 'typingIndicator';
+            typingDiv.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        function hideTyping() {
+            const typing = document.getElementById('typingIndicator');
+            if (typing) {
+                typing.remove();
+            }
+        }
+
+        function goBack() {
+            if (currentUser === 'doctor') {
+                showScreen('dashboard');
+            } else {
+                showScreen('chat');
+            }
+        }
+
+        function showProfile() {
+            alert('Funcionalidade de perfil em desenvolvimento!');
+        }
+
+        // Initialize demo
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('CognEasy Protótipo carregado com sucesso!');
+        });
+    </script>
+</body>
+</html>
+                
