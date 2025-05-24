@@ -1,0 +1,31 @@
+/* 
+ * CognEasy - Protótipo
+ * Estilos adicionais ou customizações
+ */
+
+/* Adicione estilos extras se necessário */
+.github-corner {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.tutorial-link {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    transition: all 0.3s;
+}
+
+.tutorial-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+}
