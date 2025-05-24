@@ -2,14 +2,14 @@
 
 > Assistente Virtual Inteligente para Gestão de Tratamento Oncológico
 
-[![GitHub Pages](https://img.shields.io/badge/demo-live-green)](https://SEU_USUARIO.github.io/cogneasy-prototype)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-green)](https://deepfluxion.github.io/cogneasy-prototype/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## 🎯 Sobre o Projeto
 
 O CognEasy é um assistente virtual inteligente que revoluciona a gestão de tratamento oncológico através de uma interface conversacional única, centralizando todas as funcionalidades através de IA generativa com acesso a documentos médicos.
 
-## 🚀 [Ver Protótipo Ao Vivo](https://SEU_USUARIO.github.io/cogneasy-prototype)
+## 🚀 [Ver Protótipo Ao Vivo](https://https://deepfluxion.github.io/cogneasy-prototype/)
 
 ## 📖 [Tutorial de Navegação](./docs/tutorial.md)
 
@@ -31,8 +31,8 @@ O CognEasy é um assistente virtual inteligente que revoluciona a gestão de tra
 
 ## 🎬 Como Testar
 
-1. **Acesse o protótipo**: [Link do Demo](https://SEU_USUARIO.github.io/cogneasy-prototype)
-2. **Escolha um perfil**: Paciente ou Médico
+1. **Acesse o protótipo**: [Link do Demo](https://deepfluxion.github.io/cogneasy-prototype/)
+2. **Escolha um perfil**: Paciente/Cuidador ou Profissional da Saúde
 3. **Siga o tutorial**: [Guia completo](./docs/tutorial.md)
 4. **Teste cenários**: Use as ações rápidas do chat
 
@@ -66,7 +66,8 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ## 📞 Contato
 
-Domingos Napolitano - [LinkedIN](https://www.linkedin.com/in/dnapolitano/) - domingos.napolitano@gmail.co
+Domingos Napolitano - ![image](https://github.com/user-attachments/assets/c8227deb-b5c4-438d-aca5-7250ad8b7324)
+[LinkedIn](https://www.linkedin.com/in/dnapolitano/) - domingos.napolitano@gmail.com
 
 Link do Projeto: [https://github.com/DeepFluxion/cogneasy-prototype](https://github.com/DeepFluxion/cogneasy-prototype)
 
