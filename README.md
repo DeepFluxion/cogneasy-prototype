@@ -66,9 +66,9 @@ Distribuído sob a licença MIT. Veja `LICENSE` para mais informações.
 
 ## 📞 Contato
 
-Seu Nome - [@seu_twitter](https://twitter.com/seu_twitter) - email@exemplo.com
+Domingos Napolitano - [LinkedIN](https://www.linkedin.com/in/dnapolitano/) - domingos.napolitano@gmail.co
 
-Link do Projeto: [https://github.com/SEU_USUARIO/cogneasy-prototype](https://github.com/SEU_USUARIO/cogneasy-prototype)
+Link do Projeto: [https://github.com/DeepFluxion/cogneasy-prototype](https://github.com/DeepFluxion/cogneasy-prototype)
 
 ---
 
